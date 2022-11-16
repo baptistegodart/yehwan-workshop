@@ -1,14 +1,74 @@
-:root {
-  /* variables ici */
-  color: rgb(255, 255, 255);
-  
+@font-face {
+  font-family: "AcuminVariableConcept";
+  src: local("AcuminVariableConcept"),
+    url("AcuminVariableConcept.otf") format("opentype");
 }
 
-body{
-  background: rgb(162,0,255);
-  background: radial-gradient(circle,
-rgb(147, 133, 255) 0%,
-rgb(182, 188, 255) 50%, 
-rgb(255, 208, 164) 75%, 
-rgb(255, 170, 141) 100%);
+html, body {
+  font-family: AcuminVariableConcept;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.debugCanvas {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  z-index: 0;
+  left: 0;
+}
+
+#content{
+  position: absolute;
+  z-index: 1000;
+  text-transform: uppercase;
+  font-weight: 900;
+  width: 100vw;
+  height: auto;
+  transition: transform 1s;
+}
+
+#content p{
+  font-family: AcuminVariableConcept;
+  margin: 0;
+  line-height: 0;
+  font-size: 80px;
+}
+
+.content-case{
+  position: relative;
+  height: 33.33vh;
+  width: 100vw;
+}
+
+.content-text{
+  width: 100%;
+  height: 33.33vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: center;
+}
+
+#be{
+  transform-origin: 50% top;
+}
+
+#full{
+  transform-origin: 50% bottom;
+}
+
+.word{
+  transform: scaleY(1);
+  transition: transform 0.3s;
+}
+
+.hidden {
+  display: none;
 }
