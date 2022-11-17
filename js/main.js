@@ -5,9 +5,37 @@ import '/stylePart2.css'
 import "p5"
 
 import { onResults, setOptions, showVideo, keys } from "./mediapipe-simplifier"
+import StateMachine from 'javascript-state-machine';
+
+let touchY = 0
+
+const stater = new StateMachine({
+  init: 'webcam',
+  transitions: [
+    { name: 'touchStart', from: 'webcam', to: 'touching' },
+    { name: 'touchEnd', from: ['webcam', 'touching'], to: 'webcam' },
+  ],
+  methods: {
+    onTouchStart: function () {
 
 
-const videoMode = true
+      textCam.classList.add('hidden');
+      contentHtmlTouch.classList.remove('hidden')
+      firstAnim = false
+      scdAnim = true
+
+    },
+    onTouchEnd: function () {
+
+      contentHtmlTouch.classList.add('hidden')
+      firstAnim = true
+      scdAnim = false;
+
+    },
+  }
+});
+
+const debugMode = true
 
 let detected = false
 
@@ -20,89 +48,89 @@ let firstAnim = true
 let scdAnim = false
 
 // First part var
-let contentHtmlCam = document.querySelector('#contentPart1')
+let textCam = document.querySelector('#contentPart1')
 let txtClassName = 'word-cam'
 let textPart1 = [
   {
-    el : document.createElement('p'),
-    contentTxt : 'be',
-    id : 'be'
+    el: document.createElement('p'),
+    contentTxt: 'be',
+    id: 'be'
   },
   {
-    el : document.createElement('p'),
-    contentTxt : 'care',
-    id : 'care'
+    el: document.createElement('p'),
+    contentTxt: 'care',
+    id: 'care'
   },
   {
-    el : document.createElement('p'),
-    contentTxt : 'full',
-    id : 'full'
+    el: document.createElement('p'),
+    contentTxt: 'full',
+    id: 'full'
   }
 ]
 let colors = [
   { // ROSE
-    pastel : "rgb(248, 163, 230)",
-    fluo : "rgb(255, 0, 255)"
+    pastel: "rgb(248, 163, 230)",
+    fluo: "rgb(255, 0, 255)"
   },
   { // BLEU
-    pastel : "rgb(40, 142, 255)",
-    fluo : "rgb(40, 53, 255)"
+    pastel: "rgb(40, 142, 255)",
+    fluo: "rgb(40, 53, 255)"
   },
   { // ORANGE
-    pastel : "rgb(255, 132, 12)",
-    fluo : "rgb(255, 66, 0)"
+    pastel: "rgb(255, 132, 12)",
+    fluo: "rgb(255, 66, 0)"
   },
   { // VERT
-    pastel : "rgb(169, 238, 138)",
-    fluo : "rgb(0, 255, 0)"
+    pastel: "rgb(169, 238, 138)",
+    fluo: "rgb(0, 255, 0)"
   }
-  
+
 ]
 
 // Scd part var
 let contentHtmlTouch = document.querySelector('#contentPart2')
 let textPart2 = [
   {
-    el : document.createElement('p'),
-    contentTxt : 'be',
-    id : 'be'
+    el: document.createElement('p'),
+    contentTxt: 'be',
+    id: 'be'
   },
   {
-    el : document.createElement('p'),
-    contentTxt : 'care',
-    id : 'care'
+    el: document.createElement('p'),
+    contentTxt: 'care',
+    id: 'care'
   }
 ]
 let videos = [
   { // ROSE
-    src : "/videos/4.mp4"
+    src: "/videos/4.mp4"
   },
   { // BLEU
-    src : "/videos/1.mp4"
+    src: "/videos/1.mp4"
   },
   { // ORANGE
-    src : "/videos/3.mp4"
+    src: "/videos/3.mp4"
   },
   { // VERT
-    src : "/videos/2.mp4"
+    src: "/videos/2.mp4"
   }
 
 ]
 
 window.setup = () => {
   windowResized()
-  showVideo(videoMode)
+  showVideo(debugMode)
   window.addEventListener("touchstart", fingerDown);
-  window.addEventListener("touchmove", fingerMove);
+  window.addEventListener("touchmove", fingerMove, true);
   window.addEventListener("touchend", fingerUp);
-  
+
   // CREATE HTML CONTENT
   // Cam content
-  for(let i = 0; i < textPart1.length; i++){
+  for (let i = 0; i < textPart1.length; i++) {
     let elDivCaseCam = document.createElement('div')
     elDivCaseCam.setAttribute('class', 'content-case-cam')
     elDivCaseCam.setAttribute('id', textPart1[i].id)
-    contentHtmlCam.appendChild(elDivCaseCam)
+    textCam.appendChild(elDivCaseCam)
 
     let elDivTextCam = document.createElement('div')
     elDivTextCam.setAttribute('class', 'content-text-cam')
@@ -115,7 +143,7 @@ window.setup = () => {
   }
 
   // Touch content
-  for(let i = 0; i < textPart2.length; i++){
+  for (let i = 0; i < textPart2.length; i++) {
     let elDivCaseTouch = document.createElement('div')
     elDivCaseTouch.setAttribute('id', `${textPart2[i].id}-case`)
     elDivCaseTouch.setAttribute('class', 'content-case')
@@ -125,7 +153,7 @@ window.setup = () => {
     elVideoTouch.setAttribute('id', `video${i}`)
     //elVideoTouch.setAttribute('webkit-playsinline', 'webkit-playsinline');
     elVideoTouch.src = selectRandomVideo()
-    //elVideoTouch.autoplay = true;
+    elVideoTouch.autoplay = true;
     // elVideoTouch.loop = true;
     // elVideoTouch.muted = true;
     elDivCaseTouch.appendChild(elVideoTouch)
@@ -140,10 +168,10 @@ window.setup = () => {
     elDivTextTouch.appendChild(textPart2[i].el);
   }
 
-  camAnimation()
+  animate()
 }
 
-function camAnimation(){
+function animate() {
   if (detected) {
     // receip ear's position and calculate distance
     const leftEar = toCanvas(landmarks[keys.LEFT_EAR])
@@ -151,37 +179,35 @@ function camAnimation(){
     calculateDistance(leftEar.x, rightEar.x)
 
     // display txt
-    contentHtmlCam.classList.remove('hidden');
+    //if (!contentHtmlTouch.classList.has('hidden'))
 
     // animation when ppl come closer from device
     // TXT SETTINGS
     // let scaleTxt = parseInt(map(newDistance, 0, 8, 1, 3))
-    
+
     // COLOR SETTINGS
     let elWord = document.getElementsByClassName('word-cam')
     let colorAleat = Math.floor(random(0, 4))
 
-    for(let i = 0; i < elWord.length; i++){
+    for (let i = 0; i < elWord.length; i++) {
       elWord[i].style.transform = `scaleX(2) scaleY(4.4) translateY(1.3vh)`
-      if(oldDistance != newDistance){
+      if (oldDistance != newDistance) {
         elWord[i].style.color = colors[colorAleat].fluo
       }
     }
-  }else{
-    // hide txt
-    contentHtmlCam.classList.add('hidden');
   }
 
-  if(firstAnim && !scdAnim){
-    requestAnimationFrame(camAnimation);
-  }
-}
+  let posY = touchY / window.innerHeight
+  posY = constrain(posY, 0, 1)
 
-function touchAnimation(){
+  document.body.style.setProperty('--pos-y', posY)
 
-  if(!firstAnim && scdAnim){
-    requestAnimationFrame(touchAnimation);
-  }
+
+  if (stater.is('webcam'))
+    textCam.classList.toggle('hidden', !detected);
+
+  requestAnimationFrame(animate);
+
 }
 
 window.windowResized = () => {
@@ -210,42 +236,36 @@ function toCanvas({ x, y }) {
   }
 }
 
-function calculateDistance(left, right){
-    oldDistance = newDistance
+function calculateDistance(left, right) {
+  oldDistance = newDistance
 
-    newDistance = Math.floor(right - left)
-    newDistance = map(newDistance, 0, 200, 0, 1)
-    newDistance = parseInt(newDistance * 10)
+  newDistance = Math.floor(right - left)
+  newDistance = map(newDistance, 0, 200, 0, 1)
+  newDistance = parseInt(newDistance * 10)
 
-    //console.log(newDistance);
+  //console.log(newDistance);
 }
 
-function fingerDown(){
+function fingerDown(event) {
   // init changes
-  contentHtmlCam.classList.add('hidden')
-  contentHtmlTouch.classList.remove('hidden')
-  firstAnim = false
-  scdAnim = true
-
-  touchAnimation()
+  touchY = event.touches[0].pageY;
+  stater.touchStart()
 }
 
-function fingerMove(){
-  
+function fingerMove(event) {
+  event.preventDefault()
+  console.log('move');
+  touchY = event.touches[0].pageY;
 }
 
-function fingerUp(){
+function fingerUp() {
   // init changes
-  contentHtmlCam.classList.remove('hidden')
-  contentHtmlTouch.classList.add('hidden')
-  firstAnim = true
-  scdAnim = false;
 
-  camAnimation()
+  stater.touchEnd()
 }
 
-function selectRandomVideo(){
-  let randomIndex = parseInt(random(0,4))
+function selectRandomVideo() {
+  let randomIndex = parseInt(random(0, 4))
   let randomVideo = videos[randomIndex].src
   console.log(randomVideo)
   return randomVideo

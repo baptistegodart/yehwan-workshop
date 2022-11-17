@@ -1,74 +1,76 @@
- #contentPart2 {
-    width: 100vw;
-    height: auto;
-    z-index: 1000;
-    margin: 0;
-    padding: 0;
-    
-  }
-  
-  #contentPart2 .content-case {
-    min-height: 50%; 
-    height: 50vh;
-    width: 100vw;
-    position: relative;
-  }
-  
-  #contentPart2 #be-case {
-    transform-origin: 50% top;
-    transform: scaleY(1);
-  }
-  
-  #contentPart2 .font#be {
-    font-size: 32vh;
-    transform-origin: 50% top;
-    transform: scaleY(2) translateY(-4vh) translateY(-0.5vh);
-    display: block;
-  }
-  
-  #contentPart2 .font#care {
-    transform-origin: 50% bottom;  
-    font-size: 15.2vh;
-    transform: scaleY(4.2) translateY(7.5vh);
-  }
-  
-  
-  #contentPart2 #care-case {
-    transform-origin: 50% bottom;
-    transform: scaleY(1);
-  }
-  
-  #contentPart2 p {   
-    line-height: 1;
-    font-weight: 900;
-  }
-  
-  
-  #contentPart2 .content-case video {
-    width: 100vw; 
-    height: 50vh;
-    margin: 0;
-    display: block;
-  }
+:root {
+  --pos-y: 0.5 /* 0-1 */
+}
 
-  #video0,
-  #video1{
-    width: 100vw; 
-    height: 50vh;
-    margin: 0;
-    display: block;
-  }
-  
-  #contentPart2 .content-text {
-    width: 100%; 
-    height: 50vh;
-    position: absolute; 
-    top: 0; 
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  
+#contentPart2 {
+   width: 100vw;
+   height: auto;
+   z-index: 1000;
+   margin: 0;
+   padding: 0;
+ }
+
+ #contentPart2 .content-case {
+   min-height: 50%;
+   height: 50vh;
+   width: 100vw;
+   position: relative;
+ }
+
+ #contentPart2 #be-case {
+   transform-origin: 50% top;
+   transform: scaleY(calc(var(--pos-y) * 2));
+ }
+
+ #contentPart2 #care-case {
+   transform-origin: 50% bottom;
+   transform: scaleY(calc((1 - var(--pos-y)) * 2));
+ }
+
+
+ #contentPart2 .font#be {
+   font-size: 32vh;
+   transform-origin: 50% top;
+   transform: scaleY(2) translateY(-4vh) translateY(-0.5vh);
+   display: block;
+ }
+
+ #contentPart2 .font#care {
+   transform-origin: 50% bottom;
+   font-size: 15.2vh;
+   transform: scaleY(4.2) translateY(7.5vh);
+ }
+
+
+ #contentPart2 p {
+   line-height: 1;
+   font-weight: 900;
+ }
+
+
+ #contentPart2 .content-case video {
+   width: 100vw;
+   height: 50vh;
+   margin: 0;
+   display: block;
+ }
+
+ #video0,
+ #video1 {
+   width: 100vw;
+   height: 50vh;
+   margin: 0;
+   display: block;
+ }
+
+ #contentPart2 .content-text {
+   width: 100%;
+   height: 50vh;
+   position: absolute;
+   top: 0;
+   left: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+ }

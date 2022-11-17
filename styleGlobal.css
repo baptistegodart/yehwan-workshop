@@ -10,6 +10,8 @@ html, body {
     left: 0;
     font-family: AcuminVariableConcept;
     text-transform: uppercase;
+    touch-action: none;
+
     margin: 0;
     height: 100%;
     width: 100%;
