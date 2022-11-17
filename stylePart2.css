@@ -53,6 +53,7 @@
    height: 50vh;
    margin: 0;
    display: block;
+   transform: scaleX(1.8);
  }
 
  #video0,

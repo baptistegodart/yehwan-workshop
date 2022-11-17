@@ -17,20 +17,15 @@ const stater = new StateMachine({
   ],
   methods: {
     onTouchStart: function () {
-
-
       textCam.classList.add('hidden');
       contentHtmlTouch.classList.remove('hidden')
       firstAnim = false
       scdAnim = true
-
     },
     onTouchEnd: function () {
-
       contentHtmlTouch.classList.add('hidden')
       firstAnim = true
       scdAnim = false;
-
     },
   }
 });
@@ -151,11 +146,11 @@ window.setup = () => {
 
     let elVideoTouch = document.createElement('video')
     elVideoTouch.setAttribute('id', `video${i}`)
-    //elVideoTouch.setAttribute('webkit-playsinline', 'webkit-playsinline');
+    elVideoTouch.setAttribute('playsinline','');
     elVideoTouch.src = selectRandomVideo()
     elVideoTouch.autoplay = true;
-    // elVideoTouch.loop = true;
-    // elVideoTouch.muted = true;
+    elVideoTouch.loop = true;
+    elVideoTouch.muted = true;
     elDivCaseTouch.appendChild(elVideoTouch)
 
     let elDivTextTouch = document.createElement('div')
