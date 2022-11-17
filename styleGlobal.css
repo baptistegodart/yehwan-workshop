@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "AcuminVariableConcept";
+    src: local("AcuminVariableConcept"),
+      url("AcuminVariableConcept.otf") format("opentype");
+}
+  
+html, body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: AcuminVariableConcept;
+    text-transform: uppercase;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden !important;
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;   
+}
+
+.videoCanvas {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    z-index: 0;
+    left: 0;
+}
+
+.hidden {
+    display: none;
+}

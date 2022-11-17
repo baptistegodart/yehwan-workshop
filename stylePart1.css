@@ -1,30 +1,6 @@
-@font-face {
-  font-family: "AcuminVariableConcept";
-  src: local("AcuminVariableConcept"),
-    url("AcuminVariableConcept.otf") format("opentype");
-}
-
-html, body {
-  font-family: AcuminVariableConcept;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-.videoCanvas {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  max-width: 100%;
-  z-index: 0;
-  left: 0;
-}
-
 #contentPart1{
   position: absolute;
-  z-index: 1000;
-  text-transform: uppercase;
+  z-index: 1;
   font-weight: 900;
   width: 100vw;
   height: auto;
@@ -32,19 +8,18 @@ html, body {
 }
 
 #contentPart1 p{
-  font-family: AcuminVariableConcept;
   margin: 0;
   line-height: 0;
   font-size: 10vh;
 }
 
-.content-case{
+#contentPart1 .content-case-cam{
   position: relative;
   height: 33.33vh;
   width: 100vw;
 }
 
-.content-text{
+#contentPart1 .content-text-cam{
   width: 100%;
   height: 33.33vh;
   position: absolute;
@@ -56,25 +31,21 @@ html, body {
   flex-direction: center;
 }
 
-#be{
+#contentPart1 #be{
   transform: scaleY(1) scaleX(1.7);
   transform-origin: 50% top;
 }
 
-#care{
+#contentPart1 #care{
   transform: scaleY(1) scaleX(0.82) translateX(0.3vh);
 }
 
-#full{
+#contentPart1 #full{
   transform: scaleY(1) scaleX(0.87);
   transform-origin: 50% top;
 }
 
-.word{
+#contentPart1 .word-cam{
   transform: scaleY(1);
   transition: transform 0.3s;
-}
-
-.hidden {
-  display: none;
 }
