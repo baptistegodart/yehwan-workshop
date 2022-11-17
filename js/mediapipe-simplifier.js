@@ -9,7 +9,7 @@ export const videoElement =
 export const debugCanvas =
     document.createElement('canvas');
 
-debugCanvas.className = 'debugCanvas hidden'
+debugCanvas.className = 'videoCanvas hidden'
 document.body.appendChild(debugCanvas)
 const canvasCtx = debugCanvas.getContext('2d');
 

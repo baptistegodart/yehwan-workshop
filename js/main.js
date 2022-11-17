@@ -4,7 +4,8 @@ import "p5"
 
 import { onResults, setOptions, showVideo, keys } from "./mediapipe-simplifier"
 
-let contentHtml = document.querySelector('#content')
+let contentHtmlCam = document.querySelector('#contentPart1')
+let contentHtmlTouch = document.querySelector('#contentPart2')
 
 const videoMode = true
 
@@ -57,13 +58,17 @@ let color = [
 window.setup = () => {
   windowResized()
   showVideo(videoMode)
+  window.addEventListener("touchstart", fingerDown);
+  window.addEventListener("touchmove", fingerDown);
+  window.addEventListener("touchend", fingerUp);
   
   // CREATE HTML CONTENT
+  // Cam content
   for(let i = 0; i < text.length; i++){
     let elDivCase = document.createElement('div');
     elDivCase.setAttribute('id', text[i].id)
     elDivCase.setAttribute('class', 'content-case')
-    contentHtml.appendChild(elDivCase)
+    contentHtmlCam.appendChild(elDivCase)
 
     let elDivText = document.createElement('div');
     elDivText.setAttribute('class', 'content-text')
@@ -74,10 +79,26 @@ window.setup = () => {
     elDivText.appendChild(text[i].el);
   }
 
-  animation()
+  // Touch content
+  for(let i = 0; i < text.length; i++){
+    // let elDivCase = document.createElement('div');
+    // elDivCase.setAttribute('id', text[i].id)
+    // elDivCase.setAttribute('class', 'content-case')
+    // contentHtmlTouch.appendChild(elDivCase)
+
+    // let elDivText = document.createElement('div');
+    // elDivText.setAttribute('class', 'content-text')
+    // elDivCase.appendChild(elDivText)
+
+    // text[i].el.textContent = text[i].contentTxt
+    // text[i].el.setAttribute('class', txtClassName)
+    // elDivText.appendChild(text[i].el);
+  }
+
+  camAnimation()
 }
 
-function animation(){
+function camAnimation(){
   if (detected) {
     // receip ear's position and calculate distance
     const leftEar = toCanvas(landmarks[keys.LEFT_EAR])
@@ -85,9 +106,9 @@ function animation(){
     calculateDistance(leftEar.x, rightEar.x)
 
     // display txt
-    contentHtml.classList.remove('hidden');
+    contentHtmlCam.classList.remove('hidden');
 
-    // animation on ppl get closer from device
+    // animation when ppl come closer from device
     // TXT SETTINGS
     let scaleTxt = parseInt(map(newDistance, 0, 8, 1, 3))
     let elWord = document.getElementsByClassName('word')
@@ -96,17 +117,17 @@ function animation(){
     let colorAleat = Math.floor(random(0, 4))
 
     for(let i = 0; i < elWord.length; i++){
-      elWord[i].style.transform = `scaleY(${scaleTxt})`
+      elWord[i].style.transform = `scaleX(2) scaleY(${scaleTxt})`
       if(oldDistance != newDistance){
         elWord[i].style.color = color[colorAleat].fluo
       }
     }
   }else{
     // hide txt
-    contentHtml.classList.add('hidden');
+    contentHtmlCam.classList.add('hidden');
   }
 
-  requestAnimationFrame(animation);
+  requestAnimationFrame(camAnimation);
 }
 
 window.windowResized = () => {
@@ -143,4 +164,14 @@ function calculateDistance(left, right){
     newDistance = parseInt(newDistance * 10)
 
     //console.log(newDistance);
+}
+
+function fingerDown(){
+  contentHtmlCam.style.display = 'none';
+  contentHtmlTouch.classList.remove('hidden');
+}
+
+function fingerUp(){
+  contentHtmlCam.style.display = 'initial';
+  contentHtmlTouch.classList.add('hidden');
 }
