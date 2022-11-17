@@ -1,0 +1,91 @@
+
+
+@font-face {
+    font-family: Acumin;
+    src: url(../res/AcuminVariable.otf);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: Acumin;
+    
+  
+  }
+  
+  body {
+     overflow-y: hidden; 
+  }
+  
+  .content {
+    width: 100vw;
+    height: auto;
+  }
+  
+  .content-case {
+    min-height: 50%; 
+    height: 50vh;
+    width: 100vw;
+    position: relative;
+  }
+  
+  #be-case {
+    transform-origin: 50% top;
+    transform: scaleY(1);
+  
+  
+  }
+  
+  #be {
+    font-size: 32vh;
+    transform-origin: 50% top;
+  
+    transform: scaleY(2) translateY(-4vh) translateY(-0.5vh);
+    display: block;
+  
+    
+  
+  
+  }
+  
+  #care {
+    transform-origin: 50% bottom;  
+    font-size: 15.2vh;
+    transform: scaleY(4.2) translateY(7.5vh);
+  
+  }
+  
+  
+  #care-case {
+    transform-origin: 50% bottom;
+    transform: scaleY(1);
+  }
+  
+  p {    
+   
+    line-height: 1;
+    font-weight: 900;
+  
+  }
+  
+  
+  .content-case video {
+    width: 100vw; 
+    height: 50vh;
+    margin: auto;
+    display: block;
+  }
+  
+  .content-text {
+    width: 100%; 
+    height: 50vh;
+    position: absolute; 
+    top: 0; 
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  
