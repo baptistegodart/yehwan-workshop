@@ -21,6 +21,20 @@ const stater = new StateMachine({
       contentHtmlTouch.classList.remove('hidden')
       firstAnim = false
       scdAnim = true
+
+      let elWord = document.getElementsByClassName('font')
+
+      for (let i = 0; i < elWord.length; i++) {
+        let colorAleat = Math.floor(random(0, 4))
+        elWord[i].style.color = colors[colorAleat].fluo
+      }
+
+      let video1 = document.getElementById('video0')
+      let video2 = document.getElementById('video1')
+
+      video1.src = selectRandomVideo()
+      video2.src = selectRandomVideo()
+
     },
     onTouchEnd: function () {
       contentHtmlTouch.classList.add('hidden')
@@ -147,7 +161,6 @@ window.setup = () => {
     let elVideoTouch = document.createElement('video')
     elVideoTouch.setAttribute('id', `video${i}`)
     elVideoTouch.setAttribute('playsinline','');
-    elVideoTouch.src = selectRandomVideo()
     elVideoTouch.autoplay = true;
     elVideoTouch.loop = true;
     elVideoTouch.muted = true;
