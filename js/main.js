@@ -22,18 +22,16 @@ const stater = new StateMachine({
       firstAnim = false
       scdAnim = true
 
-      let elWord = document.getElementsByClassName('font')
+      // let elWord = document.getElementsByClassName('font')
+      // for (let i = 0; i < elWord.length; i++) {
+      //   let colorAleat = Math.floor(random(0, 4))
+      //   elWord[i].style.color = colors[colorAleat].fluo
+      // }
 
-      for (let i = 0; i < elWord.length; i++) {
-        let colorAleat = Math.floor(random(0, 4))
-        elWord[i].style.color = colors[colorAleat].fluo
-      }
-
-      let video1 = document.getElementById('video0')
-      let video2 = document.getElementById('video1')
-
-      video1.src = selectRandomVideo()
-      video2.src = selectRandomVideo()
+      // let video1 = document.getElementById('video0')
+      // let video2 = document.getElementById('video1')
+      // video1.src = selectRandomVideo()
+      // video2.src = selectRandomVideo()
 
     },
     onTouchEnd: function () {
@@ -123,6 +121,18 @@ let videos = [
   { // VERT
     src: "/videos/2.mp4"
   }
+  // { // ROSE
+  //   src: "/videos/webm/4.webm"
+  // },
+  // { // BLEU
+  //   src: "/videos/webm/1.webm"
+  // },
+  // { // ORANGE
+  //   src: "/videos/webm/3.webm"
+  // },
+  // { // VERT
+  //   src: "/videos/webm/2.webm"
+  // }
 
 ]
 
@@ -161,6 +171,7 @@ window.setup = () => {
     let elVideoTouch = document.createElement('video')
     elVideoTouch.setAttribute('id', `video${i}`)
     elVideoTouch.setAttribute('playsinline','');
+    elVideoTouch.src = selectRandomVideo()
     elVideoTouch.autoplay = true;
     elVideoTouch.loop = true;
     elVideoTouch.muted = true;
