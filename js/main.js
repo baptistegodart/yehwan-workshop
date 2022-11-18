@@ -17,17 +17,20 @@ const stater = new StateMachine({
   ],
   methods: {
     onTouchStart: function () {
-      textCam.classList.add('hidden');
-      contentHtmlTouch.classList.remove('hidden')
+      // -- init changes --
+      elTxtCam.classList.add('hidden');
+      elTxtTouch.classList.remove('hidden')
       firstAnim = false
       scdAnim = true
 
+      // -- Load random color for the txt each time screen is touched --
       // let elWord = document.getElementsByClassName('font')
       // for (let i = 0; i < elWord.length; i++) {
       //   let colorAleat = Math.floor(random(0, 4))
       //   elWord[i].style.color = colors[colorAleat].fluo
       // }
 
+      // -- Load random video each time screen is touched --
       // let video1 = document.getElementById('video0')
       // let video2 = document.getElementById('video1')
       // video1.src = selectRandomVideo()
@@ -35,28 +38,28 @@ const stater = new StateMachine({
 
     },
     onTouchEnd: function () {
-      contentHtmlTouch.classList.add('hidden')
+      // -- init changes --
+      elTxtTouch.classList.add('hidden')
       firstAnim = true
       scdAnim = false;
     },
   }
 });
 
+let firstAnim = true
+let scdAnim = false
+
+// -- Webcam sequence var --
 const debugMode = true
 
 let detected = false
+let landmarks = []
 
 let oldDistance
 let newDistance = 0
 
-let landmarks = []
+let elTxtCam = document.querySelector('#contentPart1')
 
-let firstAnim = true
-let scdAnim = false
-
-// First part var
-let textCam = document.querySelector('#contentPart1')
-let txtClassName = 'word-cam'
 let textPart1 = [
   {
     el: document.createElement('p'),
@@ -94,8 +97,8 @@ let colors = [
 
 ]
 
-// Scd part var
-let contentHtmlTouch = document.querySelector('#contentPart2')
+// -- Touching sequence var --
+let elTxtTouch = document.querySelector('#contentPart2')
 let textPart2 = [
   {
     el: document.createElement('p'),
@@ -121,6 +124,7 @@ let videos = [
   { // VERT
     src: "/videos/2.mp4"
   }
+  // -- Webm aren't supported on Safari --
   // { // ROSE
   //   src: "/videos/webm/4.webm"
   // },
@@ -147,26 +151,26 @@ window.setup = () => {
   // Cam content
   for (let i = 0; i < textPart1.length; i++) {
     let elDivCaseCam = document.createElement('div')
-    elDivCaseCam.setAttribute('class', 'content-case-cam')
+    elDivCaseCam.classList.add('content-case-cam')
     elDivCaseCam.setAttribute('id', textPart1[i].id)
-    textCam.appendChild(elDivCaseCam)
+    elTxtCam.appendChild(elDivCaseCam)
 
     let elDivTextCam = document.createElement('div')
-    elDivTextCam.setAttribute('class', 'content-text-cam')
+    elDivTextCam.classList.add('content-text-cam')
     elDivCaseCam.appendChild(elDivTextCam)
 
     textPart1[i].el.textContent = textPart1[i].contentTxt
-    textPart1[i].el.setAttribute('class', txtClassName)
-    elDivTextCam.appendChild(textPart1[i].el);
-    console.log(textPart1[i].contentTxt);
+    textPart1[i].el.classList.add('word-cam')
+    elDivTextCam.appendChild(textPart1[i].el)
+    //console.log(textPart1[i].contentTxt);
   }
 
   // Touch content
   for (let i = 0; i < textPart2.length; i++) {
     let elDivCaseTouch = document.createElement('div')
     elDivCaseTouch.setAttribute('id', `${textPart2[i].id}-case`)
-    elDivCaseTouch.setAttribute('class', 'content-case')
-    contentHtmlTouch.appendChild(elDivCaseTouch)
+    elDivCaseTouch.classList.add('content-case')
+    elTxtTouch.appendChild(elDivCaseTouch)
 
     let elVideoTouch = document.createElement('video')
     elVideoTouch.setAttribute('id', `video${i}`)
@@ -178,12 +182,12 @@ window.setup = () => {
     elDivCaseTouch.appendChild(elVideoTouch)
 
     let elDivTextTouch = document.createElement('div')
-    elDivTextTouch.setAttribute('class', 'content-text')
+    elDivTextTouch.classList.add('content-text')
     elDivCaseTouch.appendChild(elDivTextTouch)
 
     textPart2[i].el.textContent = textPart2[i].contentTxt
     textPart2[i].el.setAttribute('id', textPart2[i].id)
-    textPart2[i].el.setAttribute('class', 'font')
+    textPart2[i].el.classList.add('font')
     elDivTextTouch.appendChild(textPart2[i].el);
   }
 
@@ -223,7 +227,7 @@ function animate() {
 
 
   if (stater.is('webcam'))
-    textCam.classList.toggle('hidden', !detected);
+    elTxtCam.classList.toggle('hidden', !detected);
 
   requestAnimationFrame(animate);
 
@@ -262,30 +266,24 @@ function calculateDistance(left, right) {
   newDistance = map(newDistance, 0, 200, 0, 1)
   newDistance = parseInt(newDistance * 10)
 
-  //console.log(newDistance);
 }
 
 function fingerDown(event) {
-  // init changes
   touchY = event.touches[0].pageY;
   stater.touchStart()
 }
 
 function fingerMove(event) {
   event.preventDefault()
-  console.log('move');
   touchY = event.touches[0].pageY;
 }
 
 function fingerUp() {
-  // init changes
-
   stater.touchEnd()
 }
 
 function selectRandomVideo() {
   let randomIndex = parseInt(random(0, 4))
   let randomVideo = videos[randomIndex].src
-  console.log(randomVideo)
   return randomVideo
 }
