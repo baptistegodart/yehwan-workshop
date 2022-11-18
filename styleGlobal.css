@@ -1,9 +1,9 @@
+/* CSS for all parts */
 @font-face {
     font-family: "AcuminVariableConcept";
     src: local("AcuminVariableConcept"),
       url("AcuminVariableConcept.otf") format("opentype");
 }
-
   
 html, body {
     position: fixed;
@@ -21,7 +21,6 @@ html, body {
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none; 
     -webkit-font-smoothing: antialiased;
-
 }
 
 .videoCanvas {

@@ -1,5 +1,5 @@
 
-
+/* CSS for webcam sequence */
 #contentPart1{
   position: absolute;
   z-index: 1;
@@ -48,6 +48,6 @@
 }
 
 #contentPart1 .word-cam{
-  transform: scaleY(1);
+  transform: scaleX(2) scaleY(4.4) translateY(1.3vh);
   transition: transform 0.3s;
 }

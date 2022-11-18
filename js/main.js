@@ -143,12 +143,13 @@ let videos = [
 window.setup = () => {
   windowResized()
   showVideo(debugMode)
+
   window.addEventListener("touchstart", fingerDown);
   window.addEventListener("touchmove", fingerMove, true);
   window.addEventListener("touchend", fingerUp);
 
-  // CREATE HTML CONTENT
-  // Cam content
+  // CREATE HTML
+  // -- Webcam content --
   for (let i = 0; i < textPart1.length; i++) {
     let elDivCaseCam = document.createElement('div')
     elDivCaseCam.classList.add('content-case-cam')
@@ -165,7 +166,7 @@ window.setup = () => {
     //console.log(textPart1[i].contentTxt);
   }
 
-  // Touch content
+  // -- Touching content --
   for (let i = 0; i < textPart2.length; i++) {
     let elDivCaseTouch = document.createElement('div')
     elDivCaseTouch.setAttribute('id', `${textPart2[i].id}-case`)
@@ -196,24 +197,15 @@ window.setup = () => {
 
 function animate() {
   if (detected) {
-    // receip ear's position and calculate distance
+    // -- Get ears pos and calc distance between them --
     const leftEar = toCanvas(landmarks[keys.LEFT_EAR])
     const rightEar = toCanvas(landmarks[keys.RIGHT_EAR])
     calculateDistance(leftEar.x, rightEar.x)
 
-    // display txt
-    //if (!contentHtmlTouch.classList.has('hidden'))
-
-    // animation when ppl come closer from device
-    // TXT SETTINGS
-    // let scaleTxt = parseInt(map(newDistance, 0, 8, 1, 3))
-
-    // COLOR SETTINGS
+    // -- Animation when ppl come closer from device --
     let elWord = document.getElementsByClassName('word-cam')
     let colorAleat = Math.floor(random(0, 4))
-
     for (let i = 0; i < elWord.length; i++) {
-      elWord[i].style.transform = `scaleX(2) scaleY(4.4) translateY(1.3vh)`
       if (oldDistance != newDistance) {
         elWord[i].style.color = colors[colorAleat].fluo
       }
@@ -224,7 +216,6 @@ function animate() {
   posY = constrain(posY, 0, 1)
 
   document.body.style.setProperty('--pos-y', posY)
-
 
   if (stater.is('webcam'))
     elTxtCam.classList.toggle('hidden', !detected);
